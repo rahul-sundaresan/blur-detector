@@ -45,7 +45,7 @@ while(cap.isOpened()):
         break
     if (frameId % (math.floor(frameRate)*interval) == 0):
         filename = imagesFolder + "/image_" +  str(int(frameId)).zfill(totalFrameDigit) + ".jpg" 
-        ^^^^ #Images get saved as IMG 0001, IMG 0023, IMG 0300. Used for listing alphabetically when processing
+        #^^^^ Images get saved as IMG 0001, IMG 0023, IMG 0300. Used for listing alphabetically when processing
         cv2.imwrite(filename, frame)
 cap.release()
 print("Done extracting frames!")
