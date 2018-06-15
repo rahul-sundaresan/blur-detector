@@ -33,7 +33,7 @@ imagesFolder = args["images"]
 outputCSV = open(args["output"], 'w', newline='')#new line parameter to prevent extra new lines https://stackoverflow.com/a/3348664
 interval = args["capture_interval"]
 
-#extracting 1 frame every second
+#extracting frames
 cap = cv2.VideoCapture(videoFile)
 frameRate = cap.get(5) #frame rate
 totalFrameDigit = len(str(cap.get(7))) #number of digits of total number of frames. We'll use this for formatting the output later
@@ -43,9 +43,9 @@ while(cap.isOpened()):
     ret, frame = cap.read()
     if (ret != True):
         break
-    #if (frameId % math.floor(frameRate) == 0):
     if (frameId % (math.floor(frameRate)*interval) == 0):
-        filename = imagesFolder + "/image_" +  str(int(frameId)).zfill(totalFrameDigit) + ".jpg" #here's where we use totalFrameDigit. Images get saved as IMG 001, IMG 023, IMG 300. Used for listing alphabetically
+        filename = imagesFolder + "/image_" +  str(int(frameId)).zfill(totalFrameDigit) + ".jpg" 
+        ^^^^ #Images get saved as IMG 0001, IMG 0023, IMG 0300. Used for listing alphabetically when processing
         cv2.imwrite(filename, frame)
 cap.release()
 print("Done extracting frames!")
