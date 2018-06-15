@@ -37,7 +37,6 @@ interval = args["capture_interval"]
 cap = cv2.VideoCapture(videoFile)
 frameRate = cap.get(5) #frame rate
 totalFrameDigit = len(str(cap.get(7))) #number of digits of total number of frames. We'll use this for formatting the output later
-print(totalFrameDigit)
 while(cap.isOpened()):
     frameId = cap.get(1) #current frame number
     ret, frame = cap.read()
