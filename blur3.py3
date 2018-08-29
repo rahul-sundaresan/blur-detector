@@ -1,4 +1,4 @@
-# import the necessary packages
+# python script to extract frames from video and check if its blurry
 from imutils import paths
 import argparse
 import cv2
