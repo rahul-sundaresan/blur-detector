@@ -3,6 +3,7 @@ from imutils import paths
 import argparse
 import cv2
 import csv
+import time
 #!/usr/bin/python3
 
 import os #to get file creation time
@@ -29,6 +30,7 @@ imagesFolder = args["images"]
 outputCSV = open(args["output"], 'w', newline='')#new line parameter to prevent extra new lines https://stackoverflow.com/a/3348664
 interval = args["capture_interval"]
 
+start = time.time()
 #extracting frames
 cap = cv2.VideoCapture(videoFile)
 frameRate = cap.get(5) #frame rate
@@ -43,7 +45,9 @@ while(cap.isOpened()):
         #^^^^ Images get saved as IMG 0001, IMG 0023, IMG 0300. Used for listing alphabetically when processing
         cv2.imwrite(filename, frame)
 cap.release()
+end = time.time() - start
 print("Done extracting frames!")
+print("Elapsed time :{} secs.".format(str(end)[:7]))
 
 
 writtenData=[] #array to hold the data we'll write to the csv
