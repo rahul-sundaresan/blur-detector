@@ -3,16 +3,12 @@ from imutils import paths
 import argparse
 import cv2
 import csv
+#!/usr/bin/python3
+
 import os #to get file creation time
 import math
 import datetime
 
- 
-def variance_of_laplacian(image):
-    # compute the Laplacian of the image and then return the focus
-    # measure, which is simply the variance of the Laplacian
-    return cv2.Laplacian(image, cv2.CV_64F).var()
- 
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--images", required=True,
@@ -56,22 +52,19 @@ vidcap = cv2.VideoCapture(args["video_input"])
 
 
 # loop over the input images
-for imagePath in paths.list_images(args["images"]): #this gives alphabetical list, so be sure to sort your file names accordingly
-    # load the image, convert it to grayscale, and compute the
-    # focus measure of the image using the Variance of Laplacian
-    # method
-    image = cv2.imread(imagePath)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    fm = variance_of_laplacian(gray)
+for PathToImage in paths.list_images(args["images"]):
+    ColorImage = cv2.imread(PathToImage)
+    GreyScaleImage = cv2.cvtColor(ColorImage, cv2.COLOR_BGR2GRAY)
+    VarianceOfLaplacian = cv2.Laplacian(GreyScaleImage, cv2.CV_64F).var()
     isBlurry = "not blurry"
  
     # if the focus measure is less than the supplied threshold,
     # then the image should be considered "blurry"
-    if fm < args["threshold"]:
+    if VarianceOfLaplacian < args["threshold"]:
         isBlurry = "blurry"
     rowData=[]
-    rowData.extend([os.path.abspath(imagePath),isBlurry,fm,os.path.getctime(imagePath),datetime.datetime.fromtimestamp(
-        int(os.path.getctime(imagePath))
+    rowData.extend([os.path.abspath(PathToImage),isBlurry,fm,os.path.getctime(PathToImage),datetime.datetime.fromtimestamp(
+        int(os.path.getctime(PathToImage))
     ).strftime('%Y-%m-%d %H:%M:%S')
 	])
     writtenData.append(rowData)
