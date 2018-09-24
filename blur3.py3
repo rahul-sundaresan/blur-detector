@@ -63,7 +63,7 @@ for PathToImage in paths.list_images(args["images"]):
     if VarianceOfLaplacian < args["threshold"]:
         isBlurry = "blurry"
     rowData=[]
-    rowData.extend([os.path.abspath(PathToImage),isBlurry,fm,os.path.getctime(PathToImage),datetime.datetime.fromtimestamp(
+    rowData.extend([os.path.abspath(PathToImage),isBlurry,VarianceOfLaplacian,os.path.getctime(PathToImage),datetime.datetime.fromtimestamp(
         int(os.path.getctime(PathToImage))
     ).strftime('%Y-%m-%d %H:%M:%S')
 	])
